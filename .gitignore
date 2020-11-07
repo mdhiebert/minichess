@@ -1,0 +1,4 @@
+*/__pycache__/*
+/minichess.egg-info/*
+dist
+/build/*

@@ -1,7 +1,0 @@
-README.md
-setup.py
-minichess.egg-info/PKG-INFO
-minichess.egg-info/SOURCES.txt
-minichess.egg-info/dependency_links.txt
-minichess.egg-info/requires.txt
-minichess.egg-info/top_level.txt
