@@ -1,6 +1,6 @@
-from utils import numpy_softmax
+from minichess.utils import numpy_softmax
 import numpy as np
-from players.abstract import Player
+from minichess.players.abstract import Player
 
 class RandomPlayer(Player):
     def __init__(self):
