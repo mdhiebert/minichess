@@ -3,6 +3,8 @@ from minichess.games.gardner.pieces import Pawn, King, Rook
 import unittest
 from minichess.games.gardner.board import GardnerChessBoard
 
+import numpy as np
+
 GENERIC_PAWN = Pawn(PieceColor.WHITE, (-1, -1), 100)
 GENERIC_KING = King(PieceColor.WHITE, (-1, -1), 6000)
 GENERIC_KING_BLACK = King(PieceColor.BLACK, (-1, -1), 6000)
@@ -16,10 +18,13 @@ class TestGardner(unittest.TestCase):
         self.g.wipe_board()
 
         assert self.g.is_empty() == True, 'Expected board to be empty after wiping, but was not.'
+        assert np.all(self.g.state_vector() == 0), 'Expected state vector of empty board to be all zero.'
 
         self.g.get((2,2)).push(GENERIC_PAWN)
 
         assert self.g.is_empty() == False, 'Expected board to not be empty after placing piece, but it was.'
+        assert np.any(self.g.state_vector() != 0), 'Expected state vector of nonempty board to not be zero.'
+
 
     def test_king_actions_alone(self):
         self.g.wipe_board()

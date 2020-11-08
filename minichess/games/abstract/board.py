@@ -1,6 +1,6 @@
 import enum
 from minichess.games.abstract.piece import AbstractChessPiece, PieceColor
-from resources import *
+from minichess.resources import *
 
 import numpy as np
 
@@ -286,6 +286,10 @@ class AbstractChessTile:
             Returns the reward of this tile.
         '''
         return self.piece.reward
+
+    def vector(self):
+        vector = self.piece.vector() if self.occupied() else np.zeros((1, 12))
+        return vector
 
     def __str__(self):
         return str(self.peek()) if self.occupied() else EMPTY_TILE

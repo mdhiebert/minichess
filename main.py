@@ -7,28 +7,30 @@ if __name__ == "__main__":
     g = GardnerChessBoard()
     p = RandomPlayer()
 
-    while g.status == AbstractBoardStatus.ONGOING:
-        print(g)
+    print(g.state_vector())
 
-        actions = g.legal_actions()
+    # while g.status == AbstractBoardStatus.ONGOING:
+    #     print(g)
 
-        # for action in actions:
-        #     print(action)
+    #     actions = g.legal_actions()
+
+    #     # for action in actions:
+    #     #     print(action)
         
-        proposed = p.propose_action(g, None, g.legal_action_mask())
+    #     proposed = p.propose_action(g, None, g.legal_action_mask())
 
-        input()
-        proposed = GardnerChessAction.decode(proposed, g)
-        g.push(proposed)
+    #     input()
+    #     proposed = GardnerChessAction.decode(proposed, g)
+    #     g.push(proposed)
 
-        print('+---------------+')
+    #     print('+---------------+')
 
-    print('***')
-    # all_actions = g.legal_actions_for_color(g.active_color, filter_for_check=False)
-    # for act in all_actions:
-    #     print(act)
+    # print('***')
+    # # all_actions = g.legal_actions_for_color(g.active_color, filter_for_check=False)
+    # # for act in all_actions:
+    # #     print(act)
 
-    print(g.status)
+    # print(g.status)
 
 
 

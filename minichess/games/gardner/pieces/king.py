@@ -1,4 +1,4 @@
-from resources import BLACK_KING, WHITE_KING
+from minichess.resources import BLACK_KING, WHITE_KING
 import numpy as np
 from minichess.games.abstract.piece import AbstractChessPiece, PieceColor
 

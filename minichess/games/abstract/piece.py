@@ -89,16 +89,18 @@ class AbstractChessPiece:
             `[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]` is a black bishop
         '''
 
-        color_mask = np.array(
+        color_mask = np.array([
             [int(self.color == PieceColor.WHITE)],
             [int(self.color == PieceColor.BLACK)]
-        )
+        ])
 
         onehots = np.array([
             self._onehot(), self._onehot()
         ])
 
-        return color_mask * onehots
+        vector = np.expand_dims(np.hstack(color_mask * onehots), axis=0)
+
+        return vector
 
     @property
     def reward(self):

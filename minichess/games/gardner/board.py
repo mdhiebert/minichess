@@ -219,6 +219,11 @@ class GardnerChessBoard(AbstractChessBoard):
 
         return mask
 
+    def state_vector(self) -> np.array:
+        return np.concatenate([
+            np.expand_dims(np.concatenate([tile.vector() for tile in row]), axis=0) for row in self._board
+        ])
+
     @property
     def status(self) -> AbstractBoardStatus:
         # TODO can probably be made more efficient by leveraging the flags.
