@@ -15,5 +15,9 @@ class Player:
             color :: PieceColor : the color of the player to make a move from the perspective of
 
             action_mask :: np.array : the mask of legal actions
+
+            Returns
+            -------
+            A onehot of the proposed action if applicable, None otherwise.
         '''
         raise NotImplementedError

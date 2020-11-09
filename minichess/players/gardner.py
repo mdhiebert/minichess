@@ -11,6 +11,9 @@ class RandomPlayer(Player):
         action_weights = np.random.rand(self.action_space_size)
 
         legal_actions = action_weights * action_mask
+
+        if np.all(legal_actions == 0): return None
+
         renormalized = numpy_softmax(legal_actions)
 
         idx = np.argmax(renormalized)
