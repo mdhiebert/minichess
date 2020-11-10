@@ -50,8 +50,6 @@ class GardnerChessAction(AbstractChessAction):
 
         action = ID_TO_ACTION[idx]
 
-        print(action)
-
         # action could be ((4, 4), ((1, 1), 'rook'))) or ((4, 1), (-3, -3))
 
         from_pos = action[0]
@@ -137,7 +135,7 @@ class GardnerChessActionVisitor(AbstractChessActionVisitor):
             if (is_capture and board.get(new_position).capturable(piece.color)) or not (is_capture or board.get(new_position).occupied()):
 
                 # check if this is last row
-                if new_position[0] in [0, 7]: # if yes, we must promote
+                if new_position[0] in [0, 4]: # if yes, we must promote
 
                     for flag in [AbstractActionFlags.PROMOTE_QUEEN, AbstractActionFlags.PROMOTE_KNIGHT,
                                     AbstractActionFlags.PROMOTE_BISHOP, AbstractActionFlags.PROMOTE_ROOK]:
