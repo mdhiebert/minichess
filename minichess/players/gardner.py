@@ -22,6 +22,6 @@ class RandomPlayer(Player):
         action_vector = np.zeros(self.action_space_size)
         action_vector[idx] = 1
 
-        action = GardnerChessAction.decode(action_vector, self.board)
+        action = GardnerChessAction.decode(action_vector, board)
 
         return True, action
