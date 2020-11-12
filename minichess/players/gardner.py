@@ -12,13 +12,15 @@ class RandomPlayer(Player):
 
         legal_actions = action_weights * action_mask
 
-        if np.all(legal_actions == 0): return None
+        if np.all(legal_actions == 0): return False, None
 
         renormalized = numpy_softmax(legal_actions)
 
         idx = np.argmax(renormalized)
 
-        action = np.zeros(self.action_space_size)
-        action[idx] = 1
+        action_vector = np.zeros(self.action_space_size)
+        action_vector[idx] = 1
 
-        return action
+        action = GardnerChessAction.decode(action_vector, self.board)
+
+        return True, action
