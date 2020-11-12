@@ -1,6 +1,7 @@
 from minichess.utils import numpy_softmax
 import numpy as np
 from minichess.players.abstract import Player
+from minichess.games.gardner.action import GardnerChessAction
 
 class RandomPlayer(Player):
     def __init__(self):
