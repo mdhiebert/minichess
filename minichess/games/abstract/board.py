@@ -285,7 +285,7 @@ class AbstractChessTile:
         '''
             Returns the reward of this tile.
         '''
-        return self.piece.reward
+        return self.piece.reward if self.occupied() else 0
 
     def vector(self):
         vector = self.piece.vector() if self.occupied() else np.zeros((1, 12))
