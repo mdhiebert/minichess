@@ -212,6 +212,10 @@ class AbstractChessBoard:
             for col_num in range(self.width):
                 yield self.get((row_num, col_num))
 
+    def __hash__(self):
+        tup = tuple([tile for tile in self])
+        return hash(tup)
+
 class AbstractChessTile:
     '''
         An abstract data type representing a chess tile.
@@ -293,3 +297,6 @@ class AbstractChessTile:
 
     def __str__(self):
         return str(self.peek()) if self.occupied() else EMPTY_TILE
+
+    def __hash__(self):
+        return hash(self.piece)
