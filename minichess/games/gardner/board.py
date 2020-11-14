@@ -232,10 +232,21 @@ class GardnerChessBoard(AbstractChessBoard):
 
         if AbstractActionFlags.CHECKMATE in self.peek().modifier_flags:
             return AbstractBoardStatus.WHITE_WIN if self.active_color == PieceColor.BLACK else AbstractBoardStatus.BLACK_WIN
-        elif len(self.legal_actions()) == 0:
+        elif len(self.legal_actions()) == 0 or self.has_only_kings:
             return AbstractBoardStatus.DRAW
         else:
             return AbstractBoardStatus.ONGOING
 
+    @property
+    def has_only_kings(self) -> bool:
+        '''
+            Returns
+            -------
+            True if there are only kings left, false otherwise.
+        '''
         
+        for tile in self:
+            if tile.occupied() and type(tile.peek()) != King:
+                return False
 
+        return True
