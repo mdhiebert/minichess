@@ -4,6 +4,8 @@ from minichess.resources import *
 
 import numpy as np
 
+import hashlib
+
 from typing import List, Union, Iterable
 
 LETTER_TO_COLUMN = {
@@ -213,8 +215,7 @@ class AbstractChessBoard:
                 yield self.get((row_num, col_num))
 
     def __hash__(self):
-        tup = tuple([tile for tile in self])
-        return hash(tup)
+        return int(hashlib.sha512(str(self).encode('utf-8')).hexdigest(), 16)
 
 class AbstractChessTile:
     '''
@@ -261,7 +262,7 @@ class AbstractChessTile:
         self.pop() # clear former piece, if applicable
 
         self.piece = piece
-        self.piece.set_position(self.position)
+        if self.piece != None: self.piece.set_position(self.position)
 
     def pop(self):
         '''

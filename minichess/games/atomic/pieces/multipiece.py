@@ -1,9 +1,14 @@
-from typing import Set
+from typing import List
 from minichess.games.abstract.piece import AbstractChessPiece, PieceColor
 import numpy as np
 
 class MultiPiece(AbstractChessPiece):
-    def __init__(self, pieces: Set[AbstractChessPiece], position: tuple, value: int) -> None:
+    '''
+        A piece that keeps track of itself and 8 other non-pawn pieces surrounding it (up to 9 in total).
+
+        This piece keeps track of its pieces with a queue. First in, first out.
+    '''
+    def __init__(self, pieces: List[AbstractChessPiece], position: tuple, value: int) -> None:
         super().__init__(PieceColor.WHITE, position, value)
         self.pieces = pieces
 
@@ -11,10 +16,10 @@ class MultiPiece(AbstractChessPiece):
         return np.array([-1, 0, -1, 0, -1, 0])
 
     def push(self, piece):
-        self.pieces.add(piece)
+        self.pieces.append(piece)
 
     def pop(self):
-        return self.pieces.pop()
+        return self.pieces.pop(0)
 
     def __len__(self):
         return len(self.pieces)

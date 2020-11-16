@@ -17,6 +17,7 @@ class RandomPlayer(Player):
 
         renormalized = numpy_softmax(legal_actions)
 
+        print(renormalized.shape)
         idx = np.argmax(renormalized)
 
         action_vector = np.zeros(self.action_space_size)

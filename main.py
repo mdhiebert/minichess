@@ -1,3 +1,5 @@
+import numpy as np
+from minichess.games.atomic.board import AtomicChessBoard
 from minichess.games.dark.board import DarkChessBoard
 from minichess.games.rifle.board import RifleChessBoard
 from minichess.games.abstract.board import AbstractBoardStatus
@@ -9,9 +11,10 @@ if __name__ == "__main__":
     # g = GardnerChessBoard()
     r = RifleChessBoard()
     d = DarkChessBoard()
+    a = AtomicChessBoard()
     p = RandomPlayer()
 
-    game = d
+    game = a
 
     while game.status == AbstractBoardStatus.ONGOING:
         print(game)
@@ -21,12 +24,13 @@ if __name__ == "__main__":
 
         # for action in actions:
         #     print(action)
-        
-        proposed = p.propose_action(game, None, game.legal_action_mask())
-        print(game.state_vector())
 
+        # for action in actions:
+        #     print(action)
+        
+        _,proposed = p.propose_action(game, None, game.legal_action_mask())
         input()
-        proposed = GardnerChessAction.decode(proposed, game)
+        # proposed = GardnerChessAction.decode(proposed, game)
         game.push(proposed)
 
         print('+---------------+')

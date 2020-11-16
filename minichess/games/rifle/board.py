@@ -1,5 +1,5 @@
 from minichess.games.abstract.action import AbstractActionFlags, AbstractChessAction
-from minichess.games.gardner.board import GardnerChessBoard, PAWN_VALUE, KNIGHT_VALUE, BISHOP_VALUE, ROOK_VALUE, QUEEN_VALUE, KING_VALUE
+from minichess.games.gardner.board import GardnerChessBoard, PAWN_VALUE, KNIGHT_VALUE, BISHOP_VALUE, ROOK_VALUE, QUEEN_VALUE, KING_VALUE, LEN_ACTION_SPACE
 from minichess.games.rifle.pieces import *
 
 

@@ -110,4 +110,4 @@ class AbstractChessPiece:
         return '?'
 
     def __hash__(self):
-        return hash(tuple(self.vector()))
+        return hash(str(self))

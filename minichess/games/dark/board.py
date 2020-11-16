@@ -1,6 +1,6 @@
 from minichess.resources import EMPTY_TILE, SPACE
 from minichess.games.abstract.piece import PieceColor
-from minichess.games.gardner.board import GardnerChessBoard
+from minichess.games.gardner.board import GardnerChessBoard, LEN_ACTION_SPACE
 
 import numpy as np
 
