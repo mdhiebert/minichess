@@ -29,6 +29,7 @@ if __name__ == "__main__":
         #     print(action)
         
         _,proposed = p.propose_action(game, None, game.legal_action_mask())
+        print(proposed, proposed.modifier_flags)
         input()
         # proposed = GardnerChessAction.decode(proposed, game)
         game.push(proposed)

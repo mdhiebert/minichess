@@ -21,6 +21,11 @@ class MultiPiece(AbstractChessPiece):
     def pop(self):
         return self.pieces.pop(0)
 
+    @property
+    def captured_piece(self):
+        assert len(self) == 9, 'Cannot call captured_piece() mid-construction.'
+        return self.pieces[4]
+
     def __len__(self):
         return len(self.pieces)
 

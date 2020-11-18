@@ -290,9 +290,12 @@ class GardnerChessActionVisitor(AbstractChessActionVisitor):
     def visit(self, piece: AbstractChessPiece, board) -> List[AbstractChessAction]:
         return self._bishop_move_helper(piece, board) + self._rook_move_helper(piece, board)
 
-    @visitor(King)
-    def visit(self, piece: AbstractChessPiece, board) -> List[AbstractChessAction]:
+    def _king_move_helper(self, piece: AbstractChessPiece, board) -> List[AbstractChessAction]:
         diag_moves = self._bishop_move_helper(piece, board, max_dist=1)
         rook_moves = self._rook_move_helper(piece, board, max_dist=1)
 
         return diag_moves + rook_moves
+
+    @visitor(King)
+    def visit(self, piece: AbstractChessPiece, board) -> List[AbstractChessAction]:
+        return self._king_move_helper(piece, board)
