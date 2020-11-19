@@ -224,6 +224,21 @@ class GardnerChessBoard(AbstractChessBoard):
             np.expand_dims(np.concatenate([tile.vector() for tile in row]), axis=0) for row in self._board
         ])
 
+    def canonical_state_vector(self) -> np.array:
+        vector = self.state_vector()
+
+        if self.active_color == PieceColor.BLACK:
+            # flip board
+            vector = np.fliplr(np.flipud(vector))
+
+            # invert all colors
+            temp = vector[:,:,:6]
+            vector[:,:,:6] = vector[:,:,6:]
+            vector[:,:,6:] = temp
+
+        return vector
+        
+
     @property
     def status(self) -> AbstractBoardStatus:
         # TODO can probably be made more efficient by leveraging the flags.

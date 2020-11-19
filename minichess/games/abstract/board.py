@@ -184,6 +184,15 @@ class AbstractChessBoard:
         '''
         raise NotImplementedError
 
+    def canonical_state_vector(self) -> np.array:
+        '''
+            Returns the vector representation of this board from the perspective of
+            the active color AS IF that active color was white.
+
+            e.g. if active color is white, return normal. Else, invert and flip the board.
+        '''
+        raise NotImplementedError
+
     def is_valid_position(self, position: tuple) -> bool:
         '''
             Returns true if this position lies on the game board.
