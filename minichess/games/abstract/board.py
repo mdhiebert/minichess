@@ -218,6 +218,28 @@ class AbstractChessBoard:
 
         return s
 
+    def canonical_str(self) -> str:
+        if self.active_color == PieceColor.WHITE:
+            return str(self)
+        else:
+            temp_board = np.fliplr(np.flipud(self._board))
+
+            s = ''
+
+            for row in temp_board:
+                row_str = []
+                for col in row:
+                    piece = col.peek()
+                    if piece != None:
+                        inv_piece = type(piece)(piece.color.invert(), (-1, -1), 0)
+                        row_str.append(str(inv_piece))
+                    else:
+                        row_str.append(str(col))
+                s += SPACE.join(row_str)
+                s += '\n'
+
+            return s
+
     def __iter__(self):
         for row_num in range(self.height):
             for col_num in range(self.width):
