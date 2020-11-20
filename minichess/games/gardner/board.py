@@ -237,11 +237,9 @@ class GardnerChessBoard(AbstractChessBoard):
             vector[:,:,6:] = temp
 
         return vector
-        
 
     @property
     def status(self) -> AbstractBoardStatus:
-        # TODO can probably be made more efficient by leveraging the flags.
 
         if len(self.move_history) == 0: return AbstractBoardStatus.ONGOING
 

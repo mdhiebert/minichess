@@ -43,8 +43,8 @@ class GardnerChessAction(AbstractChessAction):
         return onehot
 
     @staticmethod
-    def decode(encoding_vector: np.array, state_tm1: AbstractChessBoard):
-        idx = np.argmax(encoding_vector)
+    def decode(encoding: np.array | int, state_tm1: AbstractChessBoard):
+        idx = np.argmax(encoding) if type(encoding) == np.array else encoding
 
         modifier = (-1 if state_tm1.active_color == PieceColor.WHITE else 1, 1 if state_tm1.active_color == PieceColor.WHITE else -1)
 
@@ -92,7 +92,24 @@ class GardnerChessAction(AbstractChessAction):
 
             return GardnerChessAction(agent, from_pos, to_pos, captured_piece, modifier_flags)
 
-        
+    def fliplr(self):
+        '''
+            Returns
+            -------
+            Returns this action rotated about the y-axis. E.g. moving up-right diagonal one is not up-left diagonal one.
+        '''
+        from_row,from_col = self.from_pos
+        to_row,to_col = self.to_pos
+
+        return type(self)(self.agent, (from_row, 4 - from_col), (to_row, 4 - to_col), self.captured_piece, self.modifier_flags.copy())
+
+    def flipud(self, action):
+        '''
+            Returns
+            -------
+            Returns this action rotated about the y-axis. E.g. moving up-right diagonal one is not up-left diagonal one.
+        '''
+        raise NotImplementedError
 
 # TODO check-filtering
 

@@ -55,13 +55,13 @@ class AbstractChessAction:
         raise NotImplementedError
 
     @staticmethod
-    def decode(encoding_vector: np.array, state_tm1: np.array):
+    def decode(encoding: np.array | int, state_tm1: np.array):
         '''
             Decode an AbstractChessAction from an actionspace vector and a game state.
 
             Parameters
             ----------
-            encoding_vector :: np.array : the (ACTION_SPACE,) vector representing a given action.
+            encoding :: np.array OR int : the (ACTION_SPACE,) vector representing a given action, or an int representing the index
 
             state_tm1 :: np.array : the (t-1)-th state of the game, representing the state immediately preceding
             this action. That is, the application of this action drove the game state from `state_tm1` to `state_t`
@@ -87,6 +87,22 @@ class AbstractChessAction:
             Returns
             -------
             AbstractChessAction representing the parsed action.
+        '''
+        raise NotImplementedError
+
+    def fliplr(self):
+        '''
+            Returns
+            -------
+            Returns this action rotated about the y-axis. E.g. moving up-right diagonal one is not up-left diagonal one.
+        '''
+        raise NotImplementedError
+
+    def flipud(self, action):
+        '''
+            Returns
+            -------
+            Returns this action rotated about the y-axis. E.g. moving up-right diagonal one is not up-left diagonal one.
         '''
         raise NotImplementedError
 
