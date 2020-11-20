@@ -1,7 +1,7 @@
 from minichess.games.gardner.action import GardnerChessAction, GardnerChessActionVisitor, LEN_ACTION_SPACE
 from minichess.games.abstract.action import AbstractActionFlags, AbstractChessAction
 from typing import List
-from minichess.games.abstract.piece import PieceColor
+from minichess.games.abstract.piece import AbstractChessPiece, PieceColor
 from minichess.games.gardner.pieces import Pawn, Knight, Bishop, Rook, Queen, King
 from minichess.games.abstract.board import AbstractChessBoard, AbstractBoardStatus
 
@@ -57,6 +57,46 @@ class GardnerChessBoard(AbstractChessBoard):
         self.get((4, 2)).push(white_bishop)
         self.get((4, 3)).push(white_queen)
         self.get((4, 4)).push(white_king)
+
+    @staticmethod
+    def from_vector(vector):
+        '''
+            Decodes a Chess Board from a vector.
+
+            Returns
+            -------
+            AbstractChessBoard that the vector represents.
+        '''
+
+        
+
+        id_to_piece = {
+            0: (Pawn, PAWN_VALUE),
+            1: (Knight, KNIGHT_VALUE),
+            2: (Bishop, BISHOP_VALUE),
+            3: (Rook, ROOK_VALUE),
+            4: (Queen, QUEEN_VALUE),
+            5: (King, KING_VALUE)
+        }
+
+        g = GardnerChessBoard()
+
+        for row in range(g.height):
+            for col in range(g.width):
+                v_i = vector[row][col]
+
+                assert v_i.shape == (12,)
+                
+                if np.all(v_i == 0):
+                    g.get((row,col)).push(None)
+                else:
+                    argmax = np.argmax(v_i)
+                    color = PieceColor.WHITE if argmax < 6 else PieceColor.BLACK
+                    Piece,value = id_to_piece[argmax % 6]
+
+                    g.get((row,col)).push(Piece(color, (-1, -1), value))
+
+        return g
 
     def wipe_board(self):
         '''

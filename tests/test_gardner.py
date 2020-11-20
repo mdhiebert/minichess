@@ -27,6 +27,13 @@ class TestGardner(unittest.TestCase):
         assert self.g.is_empty() == False, 'Expected board to not be empty after placing piece, but it was.'
         assert np.any(self.g.state_vector() != 0), 'Expected state vector of nonempty board to not be zero.'
 
+    def test_decode(self):
+        vec = self.g.state_vector()
+
+        decoded = GardnerChessBoard.from_vector(vec)
+
+        assert str(decoded) == str(self.g), "Expected equal strings. Got:\n{}\n{}".format(str(decoded), str(self.g))
+
     def test_canonical_str(self):
         assert str(self.g) == self.g.canonical_str(), 'Expected initial board and initial canonical board to be identical'
         self.g.active_color = PieceColor.BLACK

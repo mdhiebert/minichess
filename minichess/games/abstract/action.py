@@ -6,7 +6,7 @@ from minichess.games.abstract.piece import AbstractChessPiece
 
 import numpy as np
 
-from typing import List
+from typing import List, Union
 from enum import Enum
 
 class AbstractActionFlags(Enum):
@@ -55,7 +55,7 @@ class AbstractChessAction:
         raise NotImplementedError
 
     @staticmethod
-    def decode(encoding: np.array | int, state_tm1: np.array):
+    def decode(encoding: Union[np.array, int], state_tm1: np.array):
         '''
             Decode an AbstractChessAction from an actionspace vector and a game state.
 

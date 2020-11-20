@@ -53,6 +53,17 @@ class AbstractChessBoard:
 
         return board
 
+    @staticmethod
+    def from_vector(vector):
+        '''
+            Decodes a Chess Board from a vector.
+
+            Returns
+            -------
+            AbstractChessBoard that the vector represents.
+        '''
+        raise NotImplementedError
+
 
     def push(self, action):
         '''

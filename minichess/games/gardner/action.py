@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Union
 from minichess.games.abstract.board import AbstractChessBoard
 from minichess.games.abstract.piece import AbstractChessPiece, PieceColor
 from minichess.games.gardner.pieces import Pawn, Knight, Bishop, Rook, Queen, King
@@ -43,7 +43,7 @@ class GardnerChessAction(AbstractChessAction):
         return onehot
 
     @staticmethod
-    def decode(encoding: np.array | int, state_tm1: AbstractChessBoard):
+    def decode(encoding: Union[np.array, int], state_tm1: AbstractChessBoard):
         idx = np.argmax(encoding) if type(encoding) == np.array else encoding
 
         modifier = (-1 if state_tm1.active_color == PieceColor.WHITE else 1, 1 if state_tm1.active_color == PieceColor.WHITE else -1)
