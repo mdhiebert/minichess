@@ -106,6 +106,12 @@ class AbstractChessAction:
         '''
         raise NotImplementedError
 
+    def copy(self):
+        '''
+            Returns a deep copy of this action.
+        '''
+        return type(self)(self.agent.copy(), self.from_pos, self.to_pos, self.captured_piece.copy() if self.captured_peice else None, self.modifier_flags.copy() if self.modifier_flags else [])
+
     def __str__(self):
         return '[ {} -> {} ]'.format(self.from_pos, self.to_pos)
 

@@ -16,10 +16,11 @@ KING_VALUE   = 10000
 
 class GardnerChessBoard(AbstractChessBoard):
 
-    def __init__(self) -> None:
+    def __init__(self, board=None) -> None:
         super().__init__(5)
 
-        self._populate_board()
+        if board == None: self._populate_board()
+        else: self._board = board
 
     def _populate_board(self):
         '''
@@ -334,3 +335,15 @@ class GardnerChessBoard(AbstractChessBoard):
                 return False
 
         return True
+
+    def copy(self):
+        '''
+            Returns
+            -------
+            A deep copy of this board.
+        '''
+        new_board = type(self)(board=self._board.copy())
+        new_board.active_color = self.active_color
+        new_board.move_history = self.move_history.copy()
+
+        return new_board

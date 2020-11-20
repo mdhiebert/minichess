@@ -220,6 +220,14 @@ class AbstractChessBoard:
         '''
         raise NotImplementedError
 
+    def copy(self):
+        '''
+            Returns
+            -------
+            A deep copy of this board.
+        '''
+        raise NotImplementedError
+
     def __str__(self) -> str:
         s = ''
 
@@ -337,6 +345,9 @@ class AbstractChessTile:
     def vector(self):
         vector = self.piece.vector() if self.occupied() else np.zeros((1, 12))
         return vector
+
+    def copy(self):
+        return AbstractChessTile(self.color, self.position, self.piece.copy() if self.piece else None)
 
     def __str__(self):
         return str(self.peek()) if self.occupied() else EMPTY_TILE

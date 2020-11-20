@@ -105,6 +105,9 @@ class AbstractChessPiece:
     def reward(self):
         return self.value if self.color == PieceColor.WHITE else -1 * self.value
 
+    def copy(self):
+        return type(self)(self.color, self.position, self.value)
+
     def __str__(self) -> str:
         return '?'
 
