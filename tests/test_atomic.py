@@ -66,7 +66,7 @@ class TestAtomic(TestGardner):
         self.g.get((1,3)).push(Knight(PieceColor.BLACK, (-1, -1), 1))
         self.g.get((1,4)).push(Pawn(PieceColor.BLACK, (-1, -1), 1))
         self.g.get((2,0)).push(Pawn(PieceColor.WHITE, (-1, -1), 1))
-        self.g.get((3,2)).push(Pawn(PieceColor.WHITE, (-1, -1), 1))
+        self.g.get((2,2)).push(Pawn(PieceColor.WHITE, (-1, -1), 1))
         self.g.get((2,4)).push(Queen(PieceColor.WHITE, (-1, -1), 1))
         self.g.get((3,3)).push(Pawn(PieceColor.WHITE, (-1, -1), 1))
         self.g.get((4,4)).push(King(PieceColor.WHITE, (-1, -1), 1))
@@ -75,11 +75,7 @@ class TestAtomic(TestGardner):
         print(self.g)
         print('')
 
-        test_action = AtomicChessAction(self.g.get((3,2)).peek(), (3,2), (2,2), None)
-
-        self.g.push(test_action)
-
-        assert self.g.status == AbstractBoardStatus.WHITE_WIN, 'Expected white win over checkmate, but got {} for board:\n{}'.format(self.g.status, self.g)
+        assert self.g.status == AbstractBoardStatus.WHITE_WIN, 'Expected white win over checkmate, but got {} for board:\n{}'.format(self.g.status_for_color(PieceColor.BLACK), self.g)
 
     def test_king_cant_check(self) -> None:
         self.g.wipe_board()

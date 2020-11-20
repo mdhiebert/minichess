@@ -68,8 +68,6 @@ class GardnerChessBoard(AbstractChessBoard):
             AbstractChessBoard that the vector represents.
         '''
 
-        
-
         id_to_piece = {
             0: (Pawn, PAWN_VALUE),
             1: (Knight, KNIGHT_VALUE),
@@ -272,7 +270,7 @@ class GardnerChessBoard(AbstractChessBoard):
             vector = np.fliplr(np.flipud(vector))
 
             # invert all colors
-            temp = vector[:,:,:6]
+            temp = vector[:,:,:6].copy()
             vector[:,:,:6] = vector[:,:,6:]
             vector[:,:,6:] = temp
 
@@ -281,14 +279,47 @@ class GardnerChessBoard(AbstractChessBoard):
     @property
     def status(self) -> AbstractBoardStatus:
 
-        if len(self.move_history) == 0: return AbstractBoardStatus.ONGOING
+        # if active color in check...
 
-        if AbstractActionFlags.CHECKMATE in self.peek().modifier_flags:
-            return AbstractBoardStatus.WHITE_WIN if self.active_color == PieceColor.BLACK else AbstractBoardStatus.BLACK_WIN
-        elif len(self.legal_actions()) == 0 or self.has_only_kings:
+        opp_can_move = len(self.legal_actions_for_color(self.active_color.invert())) > 0
+        opp_actions = self.legal_actions_for_color(self.active_color.invert(), filter_for_check=False)
+        opp_checking = False
+        for act in opp_actions:
+            if AbstractActionFlags.KING_CAPTURE in act.modifier_flags:
+                opp_checking = True
+
+        ac_can_move = len(self.legal_actions_for_color(self.active_color)) > 0
+        ac_actions = self.legal_actions_for_color(self.active_color, filter_for_check=False)
+        ac_checking = False
+        for act in ac_actions:
+            if AbstractActionFlags.KING_CAPTURE in act.modifier_flags:
+                ac_checking = True
+
+        if opp_checking and not ac_can_move:
+            return AbstractBoardStatus.BLACK_WIN if self.active_color == PieceColor.WHITE else AbstractBoardStatus.WHITE_WIN
+        elif ac_checking and not opp_can_move:
+            return AbstractBoardStatus.WHITE_WIN if self.active_color == PieceColor.WHITE else AbstractBoardStatus.BLACK_WIN
+        elif (not ((opp_checking or ac_can_move) and (ac_checking or opp_can_move))) or self.has_only_kings:
             return AbstractBoardStatus.DRAW
         else:
             return AbstractBoardStatus.ONGOING
+
+        # OLD IMPLEMENTATION
+        # if len(self.move_history) == 0: return AbstractBoardStatus.ONGOING
+
+        # if AbstractActionFlags.CHECKMATE in self.peek().modifier_flags:
+        #     return AbstractBoardStatus.WHITE_WIN if self.active_color == PieceColor.BLACK else AbstractBoardStatus.BLACK_WIN
+        # elif len(self.legal_actions()) == 0 or self.has_only_kings:
+        #     return AbstractBoardStatus.DRAW
+        # else:
+        #     return AbstractBoardStatus.ONGOING
+
+    def status_for_color(self, color: PieceColor):
+        ac = self.active_color
+        self.active_color = color
+        status = self.status
+        self.active_color = ac
+        return status
 
     @property
     def has_only_kings(self) -> bool:

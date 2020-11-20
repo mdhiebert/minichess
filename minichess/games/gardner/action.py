@@ -43,7 +43,7 @@ class GardnerChessAction(AbstractChessAction):
         return onehot
 
     @staticmethod
-    def decode(encoding: Union[np.array, int], state_tm1: AbstractChessBoard):
+    def decode(encoding: Union[np.array, int], state_tm1: AbstractChessBoard, should_sanitize=True):
         idx = np.argmax(encoding) if type(encoding) == np.array else encoding
 
         modifier = (-1 if state_tm1.active_color == PieceColor.WHITE else 1, 1 if state_tm1.active_color == PieceColor.WHITE else -1)
@@ -56,7 +56,7 @@ class GardnerChessAction(AbstractChessAction):
         from_pos = action[0]
         agent = state_tm1.get(from_pos).peek()
 
-        assert agent is not None
+        if should_sanitize: assert agent is not None, 'Could not decode action. There exists no piece at {} for board:\n{}'.format(from_pos, state_tm1)
 
         second_tup = action[1]
 
@@ -103,13 +103,16 @@ class GardnerChessAction(AbstractChessAction):
 
         return type(self)(self.agent, (from_row, 4 - from_col), (to_row, 4 - to_col), self.captured_piece, self.modifier_flags.copy())
 
-    def flipud(self, action):
+    def flipud(self):
         '''
             Returns
             -------
             Returns this action rotated about the y-axis. E.g. moving up-right diagonal one is not up-left diagonal one.
         '''
-        raise NotImplementedError
+        from_row,from_col = self.from_pos
+        to_row,to_col = self.to_pos
+
+        return type(self)(self.agent, (4 - from_row, from_col), (4 - to_row, to_col), self.captured_piece, self.modifier_flags.copy())
 
 # TODO check-filtering
 
