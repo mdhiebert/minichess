@@ -64,7 +64,6 @@ class AbstractChessBoard:
         '''
         raise NotImplementedError
 
-
     def push(self, action):
         '''
             Push a `AbstractChessAction` to this chess board,
@@ -75,6 +74,11 @@ class AbstractChessBoard:
             ----------
             action :: AbstractChessAction : an action to apply to
             this game board.
+
+            Returns
+            -------
+            AbstractChessBoard reflecting the new state of the board after this action is
+            applied.
         '''
         raise NotImplementedError
 
@@ -85,8 +89,7 @@ class AbstractChessBoard:
 
             Returns
             -------
-            An AbstractChessAction for the most recent action pushed
-            to this Board.
+            A tuple (AbstractChessBoard, AbstractChessAction) representing this board after undoing the most recent action, and the most recent action, respectively.
         '''
         raise NotImplementedError
 

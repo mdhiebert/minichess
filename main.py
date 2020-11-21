@@ -8,13 +8,13 @@ from minichess.games.gardner.board import GardnerChessBoard
 from minichess.games.gardner.action import GardnerChessAction
 
 if __name__ == "__main__":
-    # g = GardnerChessBoard()
+    g = GardnerChessBoard()
     r = RifleChessBoard()
     d = DarkChessBoard()
     a = AtomicChessBoard()
     p = RandomPlayer()
 
-    game = a
+    game = g
 
     while game.status == AbstractBoardStatus.ONGOING:
         print(game)

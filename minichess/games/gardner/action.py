@@ -44,10 +44,9 @@ class GardnerChessAction(AbstractChessAction):
 
     @staticmethod
     def decode(encoding: Union[np.array, int], state_tm1: AbstractChessBoard, should_sanitize=True):
-        idx = np.argmax(encoding) if type(encoding) == np.array else encoding
-
+        idx = encoding if type(encoding) == int else np.argmax(encoding)
+        
         modifier = (-1 if state_tm1.active_color == PieceColor.WHITE else 1, 1 if state_tm1.active_color == PieceColor.WHITE else -1)
-
 
         action = ID_TO_ACTION[idx]
 
